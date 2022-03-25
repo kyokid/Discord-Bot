@@ -104,7 +104,7 @@ async def price(ctx, coin):
   percent_change_24h = round(coin_data['percent_change_24h'], 4)
   percent_change_7d = round(coin_data['percent_change_7d'], 4)
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.set_author(name=name, url=f'https://coinmarketcap.com/currencies/{name.lower()}', icon_url=icon)
+  embed.set_author(name=name, url=f'https://coinmarketcap.com/currencies/{name.lower()}', icon_url=f'{icon}')
   embed.add_field(name='**Latest Price**', value=f'{price} USD', inline=False)
   embed.add_field(name='**Percent Change in 1 hour**', value=f'{percent_change_1h}%', inline=False)
   embed.add_field(name='**Percent Change in 24 hours**', value=f'{percent_change_24h}%', inline=False)
