@@ -99,9 +99,15 @@ async def price(ctx, coin):
   name = coin_data['name']
   icon = coin_data['img_url']
   price = coin_data['price']
+  percent_change_1h = round(coin_data['percent_change_1h'], 4)
+  percent_change_24h = round(coin_data['percent_change_24h'], 4)
+  percent_change_7d = round(coin_data['percent_change_7d'], 4)
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.set_author(name=name, url="https://coinmarketcap.com/currencies/bitcoin", icon_url=icon)
-  embed.add_field(name=coin, value=f'{price} USD')
+  embed.set_author(name=name, url=f'https://coinmarketcap.com/currencies/{name.lower()}', icon_url=icon)
+  embed.add_field(name='**Latest Price**', value=f'{price} USD')
+  embed.add_field(name='**Percent Change in 1 hour**', value=f'{percent_change_1h}')
+  embed.add_field(name='**Percent Change in 24 hours**', value=f'{percent_change_24h}')
+  embed.add_field(name='**Percent Change in 7 days**', value=f'{percent_change_7d}')
   await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
