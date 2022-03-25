@@ -32,7 +32,7 @@ def get_info(crypto):
   try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
-    coin_data = data['data'][f'{crypto.upper()}']
+    coin_data = data['data'][f'{crypto.upper()}'][0]
     quote_usd = coin_data['quote']['USD']
     image_url = base_img_url + coin_data['id'] + '.png'
     d = dict()
