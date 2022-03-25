@@ -10,6 +10,7 @@ from requests import Session
 
 bot = commands.Bot(command_prefix="$")
 TOKEN = os.getenv("DISCORD_TOKEN")
+base_img_url = 'https://s2.coinmarketcap.com/static/img/coins/64x64/'
 
 @bot.command()
 async def ping(ctx):
@@ -17,7 +18,7 @@ async def ping(ctx):
 
 # getting crypto data
 def get_info(crypto):
-  url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+  url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?convert=USD'
   parameters = {
     'symbol':f'{crypto}'
   }
@@ -31,12 +32,19 @@ def get_info(crypto):
   try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
-    coin_data = data['data'][f'{crypto.upper()}']
+    coins_data = data['data']
+    coin_data = next((data for data in coins_data if data['symbol'] == crypto.upper()), None)
     quote_usd = coin_data['quote']['USD']
+    image_url = base_img_url + coin_data['id'] + '.png'
     d = dict()
     d[crypto] = round(quote_usd['price'], 4)
+    d['name'] = coin_data['name']
+    d['img_url'] = image_url
     d['mkc'] = quote_usd['market_cap']
     d['fdv'] = quote_usd['fully_diluted_market_cap']
+    d['percent_change_1h'] = quote_usd['percent_change_1h']
+    d['percent_change_24h'] = quote_usd['percent_change_24h']
+    d['percent_change_7d'] = quote_usd['percent_change_7d']
     return d
   except (ConnectionError, Timeout, TooManyRedirects) as e:
     print(e)
@@ -91,9 +99,12 @@ async def on_ready():
   print(f'You have logged in as {bot.user.name}({bot.user.id})')
 
 @bot.command()
-async def price(ctx, arg):
+async def price(ctx, coin):
+  coin_data = get_info(coin)
+  
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.add_field(name=arg, value=f'{get_price(arg)} USD')
+  embed.set_author(name=coin_data['name'], url="https://coinmarketcap.com/currencies/bitcoin", icon_url=coin_data['img_url'])
+  embed.add_field(name=coin, value=f'{get_price(coin)} USD')
   await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
