@@ -34,7 +34,7 @@ def get_info(crypto):
     data = json.loads(response.text)
     coin_data = data['data'][f'{crypto.upper()}'][0]
     quote_usd = coin_data['quote']['USD']
-    image_url = base_img_url + coin_data['id'] + '.png'
+    # image_url = base_img_url + str(coin_data['id']) + '.png'
     d = dict()
     d['price'] = round(quote_usd['price'], 4)
     # d['name'] = coin_data['name']
