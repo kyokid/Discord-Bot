@@ -8,8 +8,12 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 from requests import Session
 
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="$")
 TOKEN = os.getenv("DISCORD_TOKEN")
+
+@bot.command()
+async def ping(ctx):
+  await ctx.send('pong')
 
 # getting crypto data
 def get_info(crypto):
@@ -80,17 +84,15 @@ def predict_cap(coin):
 
 # send discord message
 async def send_message(message):
-  await discord.utils.get(client.get_all_channels(), name='channel-này-để-hold').send(message)
+  await discord.utils.get(bot.get_all_channels(), name='channel-này-để-hold').send(message)
 
-client = discord.Client()
-
-@client.event
+@bot.event
 async def on_ready():
-  print(f'You have logged in as {client}')
+  print(f'You have logged in as {bot.user.name}({bot.user.id})')
 
-@client.event
+@bot.event
 async def on_message(message):
-  if message.author == client.user:
+  if message.author == bot.user:
     return
   if message.content.startswith('$price '):
     crypto_to_be_checked = message.content.split('$price ', 1)[1].lower()
