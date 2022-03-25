@@ -90,10 +90,6 @@ def predict_cap(coin):
   return price, fdv_price, price_500_cap, price_200_cap, price_100_cap, price_50_cap
 
 
-# send discord message
-async def send_message(message):
-  await discord.utils.get(bot.get_all_channels(), name='channel-này-để-hold').send(message)
-
 @bot.event
 async def on_ready():
   print(f'You have logged in as {bot.user.name}({bot.user.id})')
@@ -101,9 +97,10 @@ async def on_ready():
 @bot.command()
 async def price(ctx, coin):
   coin_data = get_info(coin)
-  
+  name = coin_data['name']
+  icon = coin_data['img_url']
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.set_author(name=coin_data['name'], url="https://coinmarketcap.com/currencies/bitcoin", icon_url=coin_data['img_url'])
+  embed.set_author(name=name, url="https://coinmarketcap.com/currencies/bitcoin", icon_url=icon)
   embed.add_field(name=coin, value=f'{get_price(coin)} USD')
   await ctx.channel.send(embed=embed)
 #@bot.event
