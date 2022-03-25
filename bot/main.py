@@ -13,7 +13,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 
 @bot.command()
 async def ping(ctx):
-  await ctx.send('pong')
+  await ctx.channel.send('pong')
 
 # getting crypto data
 def get_info(crypto):
