@@ -18,7 +18,7 @@ async def ping(ctx):
 
 # getting crypto data
 def get_info(crypto):
-  url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?convert=USD'
+  url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?convert=USD'
   parameters = {
     'symbol':f'{crypto}'
   }
@@ -32,8 +32,7 @@ def get_info(crypto):
   try:
     response = session.get(url, params=parameters)
     data = json.loads(response.text)
-    coins_data = data['data']
-    coin_data = next((data for data in coins_data if data['symbol'] == crypto.upper()), None)
+    coin_data = data['data'][f'{crypto.upper()}']
     quote_usd = coin_data['quote']['USD']
     image_url = base_img_url + coin_data['id'] + '.png'
     d = dict()
