@@ -90,6 +90,9 @@ async def send_message(message):
 async def on_ready():
   print(f'You have logged in as {bot.user.name}({bot.user.id})')
 
+@bot.command()
+async def price(ctx, arg):
+  await ctx.channel.send(f'The current price of {arg} is {get_price(arg)} USD')
 #@bot.event
 #async def on_message(message):
 #  if message.author == bot.user:
