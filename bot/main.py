@@ -92,7 +92,9 @@ async def on_ready():
 
 @bot.command()
 async def price(ctx, arg):
-  await ctx.channel.send(f'The current price of {arg} is {get_price(arg)} USD')
+  embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
+  embed.add_field(name=arg, value=f'{get_info(arg)} USD')
+  await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
 #  if message.author == bot.user:
