@@ -36,11 +36,11 @@ def get_info(crypto):
     quote_usd = coin_data['quote']['USD']
     image_url = base_img_url + coin_data['id'] + '.png'
     d = dict()
-    d[crypto] = round(quote_usd['price'], 4)
-    d['name'] = coin_data['name']
-    d['img_url'] = image_url
-    d['mkc'] = quote_usd['market_cap']
-    d['fdv'] = quote_usd['fully_diluted_market_cap']
+    d['price'] = round(quote_usd['price'], 4)
+    # d['name'] = coin_data['name']
+    # d['img_url'] = image_url
+    # d['mkc'] = quote_usd['market_cap']
+    # d['fdv'] = quote_usd['fully_diluted_market_cap']
     d['percent_change_1h'] = quote_usd['percent_change_1h']
     d['percent_change_24h'] = quote_usd['percent_change_24h']
     d['percent_change_7d'] = quote_usd['percent_change_7d']
@@ -96,11 +96,12 @@ async def on_ready():
 @bot.command()
 async def price(ctx, coin):
   coin_data = get_info(coin)
-  name = coin_data['name']
-  icon = coin_data['img_url']
+  # name = coin_data['name']
+  # icon = coin_data['img_url']
+  price = coin_data['price']
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.set_author(name=name, url="https://coinmarketcap.com/currencies/bitcoin", icon_url=icon)
-  embed.add_field(name=coin, value=f'{get_price(coin)} USD')
+  # embed.set_author(name=name, url="https://coinmarketcap.com/currencies/bitcoin", icon_url=icon)
+  embed.add_field(name=coin, value=f'{price} USD')
   await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
