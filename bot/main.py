@@ -93,7 +93,7 @@ async def on_ready():
 @bot.command()
 async def price(ctx, arg):
   embed = discord.Embed(title='Price from CoinMarketCap', colour = discord.Colour.blue())
-  embed.add_field(name=arg, value=f'{get_info(arg)} USD')
+  embed.add_field(name=arg, value=f'{get_price(arg)} USD')
   await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
