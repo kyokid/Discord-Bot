@@ -39,6 +39,7 @@ def get_info(crypto):
     d['price'] = round(quote_usd['price'], 4)
     d['name'] = coin_data['name']
     d['img_url'] = image_url
+    print(f'img url : {image_url}')
     d['mkc'] = quote_usd['market_cap']
     d['fdv'] = quote_usd['fully_diluted_market_cap']
     d['percent_change_1h'] = quote_usd['percent_change_1h']
