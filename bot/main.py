@@ -90,30 +90,30 @@ async def send_message(message):
 async def on_ready():
   print(f'You have logged in as {bot.user.name}({bot.user.id})')
 
-@bot.event
-async def on_message(message):
-  if message.author == bot.user:
-    return
-  if message.content.startswith('$price '):
-    crypto_to_be_checked = message.content.split('$price ', 1)[1].lower()
-    await message.channel.send(f'The current price of {crypto_to_be_checked} is {get_price(crypto_to_be_checked)} USD')
-
-  if message.content.startswith('$predict '):
-    content = message.content.split(' ')
-    crypto_to_be_checked = content[1].lower()
-    if (len(content) == 3):
-      price, fdv_price = predict_base(crypto_to_be_checked, content[2].lower())
-    else:
-      price, fdv_price = predict_base(crypto_to_be_checked)
-    
-    await message.channel.send(f'The predict for price of {crypto_to_be_checked} is {price} USD and FDV price is {fdv_price}')
-
-  if message.content.startswith('$predict_low '):
-    content = message.content.split(' ')
-    crypto_to_be_checked = content[1].lower()
-    price, fdv_price, price_500_cap, price_200_cap, price_100_cap, price_50_cap = predict_cap(crypto_to_be_checked)
-    
-    await message.channel.send(f'\nPrediction for {crypto_to_be_checked}: \n- 1B Cap: {price} USD\n- 500M Cap: {price_500_cap} USD\n- 200M Cap: {price_200_cap} USD\n- 100M Cap: {price_100_cap} USD\n- 50M Cap: {price_50_cap} USD \n- FDV: {fdv_price} USD')
+#@bot.event
+#async def on_message(message):
+#  if message.author == bot.user:
+#    return
+#  if message.content.startswith('$price '):
+#    crypto_to_be_checked = message.content.split('$price ', 1)[1].lower()
+#    await message.channel.send(f'The current price of {crypto_to_be_checked} is {get_price(crypto_to_be_checked)} USD')
+#
+#  if message.content.startswith('$predict '):
+#    content = message.content.split(' ')
+#    crypto_to_be_checked = content[1].lower()
+#    if (len(content) == 3):
+#      price, fdv_price = predict_base(crypto_to_be_checked, content[2].lower())
+#    else:
+#      price, fdv_price = predict_base(crypto_to_be_checked)
+#    
+#    await message.channel.send(f'The predict for price of {crypto_to_be_checked} is {price} USD and FDV price is #{fdv_price}')
+#
+#  if message.content.startswith('$predict_low '):
+#    content = message.content.split(' ')
+#    crypto_to_be_checked = content[1].lower()
+#    price, fdv_price, price_500_cap, price_200_cap, price_100_cap, price_50_cap = predict_cap(crypto_to_be_checked)
+#    
+#    await message.channel.send(f'\nPrediction for {crypto_to_be_checked}: \n- 1B Cap: {price} USD\n- 500M Cap: {price_500_cap} USD\n- 200M Cap: {price_200_cap} USD\n- 100M Cap: {price_100_cap} USD\n- 50M Cap: {price_50_cap} USD \n- FDV: {fdv_price} USD')
 
 server.server()
 bot.run(TOKEN)
