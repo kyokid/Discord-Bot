@@ -126,8 +126,8 @@ async def predict_low(ctx, coin):
   name_arr = name.split()
   market_url = separate.join(name_arr).lower()
   price_1B_cap = round((1_000_000_000 / market_cap) * price, 2)
-  price_500_cap = price / 2
-  price_200_cap = price / 5
+  price_500_cap = price_1B_cap / 2
+  price_200_cap = price_1B_cap / 5
   price_100_cap = price_200_cap / 2
   price_50_cap = price_100_cap / 2
   fdv_price = round((2_000_000_000 / fdv) * price, 2)
