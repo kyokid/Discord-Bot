@@ -113,6 +113,34 @@ async def price(ctx, coin):
   embed.add_field(name='**Percent Change in 24 hours**', value=f'{percent_change_24h}%', inline=False)
   embed.add_field(name='**Percent Change in 7 days**', value=f'{percent_change_7d}%', inline=False)
   await ctx.channel.send(embed=embed)
+
+@bot.command()
+async def predict_low(ctx, coin):
+  coin_data = get_info(coin)
+  name = coin_data['name']
+  icon = coin_data['img_url']
+  price = coin_data['price']
+  market_cap = coin_data['mkc']
+  fdv = coin_data['fdv']
+  separate = '-'
+  name_arr = name.split()
+  market_url = separate.join(name_arr).lower()
+  price_1B_cap = round((1_000_000_000 / market_cap) * price, 2)
+  price_500_cap = price / 2
+  price_200_cap = price / 5
+  price_100_cap = price_200_cap / 2
+  price_50_cap = price_100_cap / 2
+  fdv_price = round((2_000_000_000 / fdv) * price, 2)
+  embed = discord.Embed(title='Prediction', colour = discord.Colour.red())
+  embed.set_author(name=name, url=f'https://coinmarketcap.com/currencies/{market_url}', icon_url=f'{icon}')
+  embed.add_field(name='**Latest Price**', value=f'{price} USD', inline=False)
+  embed.add_field(name='**FDV Price**', value=f'{fdv_price} USD', inline=False)
+  embed.add_field(name='**Price at 1B Cap**', value=f'{price_1B_cap} USD', inline=False)
+  embed.add_field(name='**Price at 500M Cap**', value=f'{price_500_cap} USD', inline=False)
+  embed.add_field(name='**Price at 200M Cap**', value=f'{price_200_cap} USD', inline=False)
+  embed.add_field(name='**Price at 100M Cap**', value=f'{price_100_cap} USD', inline=False)
+  embed.add_field(name='**Price at 50M Cap**', value=f'{price_50_cap} USD', inline=False)
+  await ctx.channel.send(embed=embed)
 #@bot.event
 #async def on_message(message):
 #  if message.author == bot.user:
