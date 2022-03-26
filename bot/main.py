@@ -135,10 +135,10 @@ async def predict_low(ctx, coin):
   embed.set_author(name=name, url=f'https://coinmarketcap.com/currencies/{market_url}', icon_url=f'{icon}')
   embed.add_field(name='**Latest Price**', value=f'{price} USD', inline=False)
   embed.add_field(name='**FDV Price**', value=f'{fdv_price} USD', inline=False)
-  embed.add_field(name='**Price at 1B Cap**', value=f'{price_1B_cap} USD', inline=False)
-  embed.add_field(name='**Price at 500M Cap**', value=f'{price_500_cap} USD', inline=True)
+  embed.add_field(name='**Price at 1B Cap**', value=f'{price_1B_cap} USD', inline=True)
+  embed.add_field(name='**Price at 500M Cap**', value=f'{price_500_cap} USD', inline=False)
   embed.add_field(name='**Price at 200M Cap**', value=f'{price_200_cap} USD', inline=True)
-  embed.add_field(name='**Price at 100M Cap**', value=f'{price_100_cap} USD', inline=True)
+  embed.add_field(name='**Price at 100M Cap**', value=f'{price_100_cap} USD', inline=False)
   embed.add_field(name='**Price at 50M Cap**', value=f'{price_50_cap} USD', inline=True)
   await ctx.channel.send(embed=embed)
 #@bot.event
